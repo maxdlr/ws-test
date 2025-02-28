@@ -2,7 +2,7 @@ import {RxStompConfig} from '@stomp/rx-stomp';
 
 export const rxStompConfig: RxStompConfig = {
   // Which server?
-  brokerURL: 'http://localhost:8080/ws',
+  brokerURL: 'ws://localhost:8080/ws',
 
   // Headers
   // Typical keys: login, passcode, host
@@ -19,7 +19,7 @@ export const rxStompConfig: RxStompConfig = {
   // Wait in milliseconds before attempting auto reconnect
   // Set to 0 to disable
   // Typical value 500 (500 milliseconds)
-  reconnectDelay: 10000,
+  reconnectDelay: 5000,
 
   // Will log diagnostics on console
   // It can be quite verbose, not recommended in production
