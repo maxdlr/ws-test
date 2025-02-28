@@ -1,0 +1,25 @@
+<div class="container">
+  <header>
+    <h1>Task Management App</h1>
+  </header>
+
+  <div class="content">
+    <div class="sidebar">
+    </div>
+
+    <div class="main">
+      <!--      <app-task-list [tasks]="tasks"/>-->
+    </div>
+  </div>
+</div>
+
+<div id="messages">
+  <button (click)="onSendMessage()" class="btn btn-primary">
+    Send Test Message
+  </button>
+  <h2>Received messages</h2>
+  <ol>
+    <!-- we will use Angular binding to populate list of messages -->
+    <li class="message">message</li>
+  </ol>
+</div>
