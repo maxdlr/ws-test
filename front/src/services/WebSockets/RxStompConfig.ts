@@ -6,7 +6,7 @@ export const rxStompConfig: RxStompConfig = {
   // brokerURL: 'ws://localhost:8080/ws',
 
   webSocketFactory: () => {
-    return new SockJS('http://localhost:8080/ws');
+    return new SockJS("http://maxdlr-desktop:8080/ws");
   },
 
   // Headers

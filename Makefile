@@ -17,6 +17,12 @@ export $(shell sed 's/=.*//' .env)
 back-run: ## Run the backend app
 	cd back && mvn clean spring-boot:run -DskipTests
 
+front-run: ## run the frontend app
+	cd front && ng serve --host 0.0.0.0
+
+run: ## Run all services
+	make -j2 back-run front-run
+
 help: ## This menu
 	@echo "Usage: make [target]"
 	@echo
