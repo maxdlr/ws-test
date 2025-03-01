@@ -24,7 +24,11 @@ public class TaskService {
 
         for (Task task : tasks) {
             TaskDto taskDto = new TaskDto();
-            taskDto.setDescription(task.getDescription()).setTitle(task.getTitle()).setCreatedAt(task.getCreatedAt());
+            taskDto
+                    .setId(task.getId())
+                    .setDescription(task.getDescription())
+                    .setTitle(task.getTitle())
+                    .setCreatedAt(task.getCreatedAt());
             taskDtos.add(taskDto);
         }
         return taskDtos;
@@ -45,5 +49,9 @@ public class TaskService {
 
     public Task getTask(Long id) {
         return this.taskRepository.findOneById(id);
+    }
+
+    public void deleteTask(Long id) {
+        this.taskRepository.deleteById(id);
     }
 }

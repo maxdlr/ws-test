@@ -33,4 +33,10 @@ public class TaskController {
         this.taskService.addTask(taskDto);
         messagingTemplate.convertAndSend("/topic/tasks", this.taskService.getAllTasks());
     }
+
+    @MessageMapping("/tasks.delete")
+    public void deleteTask(String id) {
+        this.taskService.deleteTask(Long.valueOf(id));
+        messagingTemplate.convertAndSend("/topic/tasks", this.taskService.getAllTasks());
+    }
 }

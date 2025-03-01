@@ -1,11 +1,10 @@
 <div class="task-list">
   <h2>Tasks</h2>
-  <div *ngIf="tasks.length === 0" class="no-tasks">
-    No tasks available
-  </div>
+  <div *ngIf="tasks.length === 0" class="no-tasks">No tasks available</div>
   <div *ngFor="let task of tasks" class="task-item">
     <h3>{{ task.title }}</h3>
     <p>{{ task.description }}</p>
-    <small>Created: {{ task.createdAt | date:'short' }}</small>
+    <small>Created: {{ task.createdAt | date: 'short' }}</small>
+    <button (click)="delete(task?.id)">Delete</button>
   </div>
 </div>

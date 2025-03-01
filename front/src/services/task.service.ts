@@ -3,26 +3,49 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environments';
 import { map, Observable } from 'rxjs';
 import { Task } from '../model/task.model';
+import { Utils } from '../utils/Utils';
+import { RxStompService } from './WebSockets/web-socket.service';
+import { IMessage } from '@stomp/stompjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
+  private rxStompService = inject(RxStompService);
+  public ws = {
+    connect: (): Observable<IMessage> => {
+      return this.rxStompService.watch('/topic/tasks');
+    },
+    create: (task: Task): void => {
+      this.rxStompService.publish({
+        destination: '/app/tasks.create',
+        body: JSON.stringify(task),
+      });
+    },
+    delete: (task: Task): void => {
+      if (!task.id) return;
+      this.rxStompService.publish({
+        destination: '/app/tasks.delete',
+        body: task.id.toString(),
+      });
+    },
+  };
   private httpClient = inject(HttpClient);
   private path = environment.apiUrl + 'tasks';
-
-  public getAll(): Observable<Task[]> {
-    return this.httpClient
-      .get<Task[]>(`${this.path}`)
-      .pipe(map((tasks: Task[]) => this.transform(tasks) as Task[]));
-  }
-
-  private transform(tasks: Task[] | Task): Task[] | Task {
-    if (Array.isArray(tasks)) {
-      return tasks.map((task: Task) => this.applyTransformRules(task));
-    }
-    return this.applyTransformRules(tasks);
-  }
+  public http = {
+    getAll: (): Observable<Task[]> => {
+      return this.httpClient
+        .get<Task[]>(`${this.path}`)
+        .pipe(
+          map(
+            (tasks: Task[]) =>
+              Utils.distributeModelTransformLogic(tasks, (task: Task) =>
+                this.applyTransformRules(task)
+              ) as Task[]
+          )
+        );
+    },
+  };
 
   private applyTransformRules(task: Task): Task {
     task.createdAt = new Date(task.createdAt as string);

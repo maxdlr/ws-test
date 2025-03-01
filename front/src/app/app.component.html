@@ -4,15 +4,12 @@
   </header>
 
   <div class="content">
-    <button (click)="onSendMessage()" class="btn btn-primary">
-      Send Test Message
-    </button>
+    <button (click)="create()" class="btn btn-primary">Send Test Message</button>
 
     <div class="main">
-      <app-task-list [tasks]="tasks"/>
+      <app-task-list [tasks]="tasks" />
     </div>
   </div>
 </div>
 
-<div id="messages">
-</div>
+<div id="messages"></div>
