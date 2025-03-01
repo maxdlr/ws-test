@@ -1,12 +1,13 @@
-import {RxStompConfig} from '@stomp/rx-stomp';
-import SockJS from "sockjs-client";
+import { RxStompConfig } from '@stomp/rx-stomp';
+import SockJS from 'sockjs-client';
+import { environment } from '../../environments/environments';
 
 export const rxStompConfig: RxStompConfig = {
   // Which server?
   // brokerURL: 'ws://localhost:8080/ws',
 
   webSocketFactory: () => {
-    return new SockJS("http://maxdlr-desktop:8080/ws");
+    return new SockJS(environment.wsUrl);
   },
 
   // Headers

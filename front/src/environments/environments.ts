@@ -2,9 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const serverAddress = 'localhost';
+
 export const environment = {
-  apiUrl: "http://maxdlr-desktop:8080/api/",
-  production: false
+  apiUrl: `http://${serverAddress}:8080/api/`,
+  wsUrl: `http://${serverAddress}:8080/ws/`,
+  production: false,
 };
 
 /*

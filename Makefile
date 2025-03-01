@@ -18,7 +18,8 @@ back-run: ## Run the backend app
 	cd back && mvn clean spring-boot:run -DskipTests
 
 front-run: ## run the frontend app
-	cd front && ng serve --host 0.0.0.0
+	export SERVER_ADDRESS="${address}"
+	cd front && yarn install && ng serve --host 0.0.0.0
 
 run: ## Run all services
 	make -j2 back-run front-run
