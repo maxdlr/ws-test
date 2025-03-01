@@ -18,7 +18,7 @@ public class WebSecurityConfig {
         http.cors(cors -> cors.configurationSource(
                         request -> {
                             var corsConfiguration = new CorsConfiguration();
-                            corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200", "http://maxdlr-desktop:4200"));
+                            corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200", "http://0.0.0.0:4200", "http://maxdlr-desktop:4200"));
                             corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                             corsConfiguration.setAllowCredentials(true);
                             return corsConfiguration;
