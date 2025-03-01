@@ -1,25 +1,19 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppComponent} from "./app.component";
-import {TaskListComponent} from "./components/task-list/task-list.component";
-import {TaskFormComponent} from "./components/task-form/task-form.component";
 import {appConfig} from "./app.config";
+import {CommonModule} from "@angular/common";
+import {TaskModule} from "./tasks/task.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TaskListComponent,
-    TaskFormComponent
-  ],
+  declarations: [],
   imports: [
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
+    CommonModule,
+    TaskModule
   ],
   providers: appConfig.providers,
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
 }

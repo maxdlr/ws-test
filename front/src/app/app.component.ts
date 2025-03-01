@@ -3,16 +3,19 @@ import {Task} from '../model/task.model';
 import {RxStompService} from "../services/WebSockets/web-socket.service";
 import {Subscription} from "rxjs";
 import {IMessage} from "@stomp/stompjs";
+import {TaskModule} from "./tasks/task.module";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
+  imports: [
+    TaskModule
+  ],
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
-  receivedMessages: Task[] = [];
   private topicSubscription!: Subscription;
 
   constructor(private rxStompService: RxStompService) {
@@ -21,8 +24,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.topicSubscription = this.rxStompService
       .watch('/topic/tasks')
-      .subscribe((task: IMessage) => {
-        this.receivedMessages.push(JSON.parse(task.body));
+      .subscribe((message: IMessage) => {
+        this.tasks.push(JSON.parse(message.body));
       });
   }
 

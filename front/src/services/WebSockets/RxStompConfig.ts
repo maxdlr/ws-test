@@ -1,15 +1,20 @@
 import {RxStompConfig} from '@stomp/rx-stomp';
+import SockJS from "sockjs-client";
 
 export const rxStompConfig: RxStompConfig = {
   // Which server?
-  brokerURL: 'ws://localhost:8080/ws',
+  // brokerURL: 'ws://localhost:8080/ws',
+
+  webSocketFactory: () => {
+    return new SockJS('http://localhost:8080/ws');
+  },
 
   // Headers
   // Typical keys: login, passcode, host
-  connectHeaders: {
-    login: 'guest',
-    passcode: 'guest',
-  },
+  // connectHeaders: {
+  //   login: 'guest',
+  //   passcode: 'guest',
+  // },
 
   // How often to heartbeat?
   // Interval in milliseconds, set to 0 to disable

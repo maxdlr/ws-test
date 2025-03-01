@@ -23,4 +23,14 @@ public class TaskDto {
     public String getDescription() {
         return description;
     }
+
+    public TaskDto setTitle(@Nonnull String title) {
+        this.title = title;
+        return this;
+    }
+
+    public TaskDto setDescription(@Nonnull String description) {
+        this.description = description;
+        return this;
+    }
 }
