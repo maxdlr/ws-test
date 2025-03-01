@@ -28,13 +28,9 @@ public class TaskController {
         return ResponseEntity.ok(this.taskService.getAllTasks());
     }
 
-    // WebSocket endpoint for creating tasks
     @MessageMapping("/tasks.create")
-//    @SendTo("/topic/tasks")
     public void createTaskWs(TaskDto taskDto) {
-        System.out.println("create task taskDto = " + taskDto);
         this.taskService.addTask(taskDto);
-        List<TaskDto> tasks = this.taskService.getAllTasks();
-        messagingTemplate.convertAndSend("/topic/tasks", tasks);
+        messagingTemplate.convertAndSend("/topic/tasks", this.taskService.getAllTasks());
     }
 }
