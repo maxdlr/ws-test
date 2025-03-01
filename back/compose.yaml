@@ -1,5 +1,6 @@
 services:
   mariadb:
+    container_name: db-ws-test
     image: 'mariadb:latest'
     environment:
       - 'MARIADB_DATABASE=mydatabase'
@@ -7,4 +8,4 @@ services:
       - 'MARIADB_ROOT_PASSWORD=verysecret'
       - 'MARIADB_USER=myuser'
     ports:
-      - '3306'
+      - '3306:3306'

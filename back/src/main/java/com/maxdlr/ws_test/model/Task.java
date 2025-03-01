@@ -41,4 +41,20 @@ public class Task {
         this.createdAt = createdAt;
         return this;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 }

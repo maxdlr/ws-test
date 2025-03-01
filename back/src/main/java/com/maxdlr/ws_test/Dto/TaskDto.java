@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
@@ -13,6 +15,17 @@ public class TaskDto {
     private String title;
     @Nonnull
     private String description;
+
+    private Date createdAt;
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public TaskDto setCreatedAt(Date CreatedAt) {
+        this.createdAt = CreatedAt;
+        return this;
+    }
 
     @Nonnull
     public String getTitle() {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api")
 public class TaskController {
 
     private final TaskService taskService;
@@ -23,28 +23,18 @@ public class TaskController {
         this.messagingTemplate = messagingTemplate;
     }
 
-    @GetMapping("/api/tasks")
-    public ResponseEntity<List<Task>> getAllTasks() {
-        TaskDto taskDto = new TaskDto();
-        taskDto.setDescription("description test").setTitle("test");
-        System.out.println("taskDto = " + taskDto);
-        this.taskService.addTask(taskDto);
-        List<Task> tasks = this.taskService.getAllTasks();
-        return ResponseEntity.ok(tasks);
-    }
-
-    @PostMapping("/api/tasks")
-    public ResponseEntity<Task> createTask(@RequestBody TaskDto taskDto) {
-        Task savedTask = this.taskService.addTask(taskDto);
-        // Notify all clients about the new task
-        messagingTemplate.convertAndSend("/topic/tasks", savedTask);
-        return ResponseEntity.ok(savedTask);
+    @GetMapping("/tasks")
+    public ResponseEntity<List<TaskDto>> getAllTasks() {
+        return ResponseEntity.ok(this.taskService.getAllTasks());
     }
 
     // WebSocket endpoint for creating tasks
     @MessageMapping("/tasks.create")
-    @SendTo("/topic/tasks")
-    public Task createTaskWs(TaskDto taskDto) {
-        return this.taskService.addTask(taskDto);
+//    @SendTo("/topic/tasks")
+    public void createTaskWs(TaskDto taskDto) {
+        System.out.println("create task taskDto = " + taskDto);
+        this.taskService.addTask(taskDto);
+        List<TaskDto> tasks = this.taskService.getAllTasks();
+        messagingTemplate.convertAndSend("/topic/tasks", tasks);
     }
 }
