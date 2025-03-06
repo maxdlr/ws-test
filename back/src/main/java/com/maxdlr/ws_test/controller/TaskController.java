@@ -28,9 +28,15 @@ public class TaskController {
         return ResponseEntity.ok(this.taskService.getAllTasks());
     }
 
-    @MessageMapping("/tasks.create")
+    @MessageMapping("/tasks.add")
     public void createTaskWs(TaskDto taskDto) {
         this.taskService.addTask(taskDto);
+        messagingTemplate.convertAndSend("/topic/tasks", this.taskService.getAllTasks());
+    }
+
+    @MessageMapping("/tasks.save")
+    public void saveTaskWs(TaskDto taskDto) {
+        this.taskService.updateTask(taskDto);
         messagingTemplate.convertAndSend("/topic/tasks", this.taskService.getAllTasks());
     }
 

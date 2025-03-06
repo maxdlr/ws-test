@@ -54,4 +54,14 @@ public class TaskService {
     public void deleteTask(Long id) {
         this.taskRepository.deleteById(id);
     }
+
+    public void updateTask(TaskDto taskDto) {
+        Task task = this.taskRepository.findOneById(taskDto.getId());
+
+        task
+                .setTitle(taskDto.getTitle())
+                .setDescription(taskDto.getDescription());
+
+        this.taskRepository.save(task);
+    }
 }

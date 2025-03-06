@@ -12,7 +12,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class TaskDto {
 
-    private Number id;
+    private Long id;
 
     @Nonnull
     private String title;
@@ -40,11 +40,11 @@ public class TaskDto {
         return description;
     }
 
-    public Number getId() {
+    public Long getId() {
         return id;
     }
 
-    public TaskDto setId(Number id) {
+    public TaskDto setId(Long id) {
         this.id = id;
         return this;
     }

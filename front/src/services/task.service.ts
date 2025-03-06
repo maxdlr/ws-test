@@ -16,9 +16,9 @@ export class TaskService {
     connect: (): Observable<IMessage> => {
       return this.rxStompService.watch('/topic/tasks');
     },
-    create: (task: Task): void => {
+    add: (task: Task): void => {
       this.rxStompService.publish({
-        destination: '/app/tasks.create',
+        destination: '/app/tasks.add',
         body: JSON.stringify(task),
       });
     },
@@ -27,6 +27,12 @@ export class TaskService {
       this.rxStompService.publish({
         destination: '/app/tasks.delete',
         body: task.id.toString(),
+      });
+    },
+    save: (task: Task): void => {
+      this.rxStompService.publish({
+        destination: '/app/tasks.save',
+        body: JSON.stringify(task),
       });
     },
   };

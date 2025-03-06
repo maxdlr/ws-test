@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { IMessage } from '@stomp/stompjs';
 import { TaskModule } from './tasks/task.module';
 import { TaskService } from '../services/task.service';
+import { faker } from '@faker-js/faker';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   private topicSubscription!: Subscription;
   private taskService = inject(TaskService);
+  private faker = faker;
 
   ngOnInit() {
     this.taskService.http.getAll().subscribe((tasks) => (this.tasks = tasks));
@@ -24,13 +26,14 @@ export class AppComponent implements OnInit, OnDestroy {
       .connect()
       .subscribe((message: IMessage) => {
         this.tasks = JSON.parse(message.body);
+        this.tasks.reverse();
       });
   }
 
   create() {
-    this.taskService.ws.create({
-      title: 'title test',
-      description: 'description tests',
+    this.taskService.ws.add({
+      title: this.faker.lorem.sentence(),
+      description: this.faker.lorem.paragraph(),
     });
   }
 
