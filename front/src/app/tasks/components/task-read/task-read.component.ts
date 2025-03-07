@@ -1,18 +1,12 @@
 import { Component, inject, Input, OnInit, Renderer2 } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Task } from '../../../../model/task.model';
 import { TaskService } from '../../../../services/task.service';
 import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-task-read',
-  imports: [DatePipe, FormsModule, ReactiveFormsModule],
+  standalone: false,
   templateUrl: './task-read.component.html',
   styleUrl: './task-read.component.scss',
 })
