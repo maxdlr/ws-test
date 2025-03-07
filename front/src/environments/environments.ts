@@ -2,7 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const serverAddress = 'localhost';
+const serverAddress = window.location.hostname;
 
 export const environment = {
   apiUrl: `http://${serverAddress}:8080/api/`,
