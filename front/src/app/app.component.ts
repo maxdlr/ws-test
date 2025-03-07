@@ -1,10 +1,10 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Task } from '../model/task.model';
-import { RxStompService } from '../services/WebSockets/web-socket.service';
 import { Subscription } from 'rxjs';
 import { IMessage } from '@stomp/stompjs';
 import { TaskModule } from './tasks/task.module';
 import { TaskService } from '../services/task.service';
+import { faker } from '@faker-js/faker';
 
 @Component({
   selector: 'app-root',
@@ -16,27 +16,24 @@ import { TaskService } from '../services/task.service';
 export class AppComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   private topicSubscription!: Subscription;
-  private rxStompService = inject(RxStompService);
   private taskService = inject(TaskService);
+  private faker = faker;
 
   ngOnInit() {
-    this.taskService.getAll().subscribe((tasks) => (this.tasks = tasks));
-    this.topicSubscription = this.rxStompService
-      .watch('/topic/tasks')
+    this.taskService.http.getAll().subscribe((tasks) => (this.tasks = tasks));
+
+    this.topicSubscription = this.taskService.ws
+      .connect()
       .subscribe((message: IMessage) => {
-        console.log(message);
         this.tasks = JSON.parse(message.body);
+        this.tasks.reverse();
       });
   }
 
-  onSendMessage() {
-    const task: Task = {
-      title: 'title test',
-      description: 'description tests',
-    };
-    this.rxStompService.publish({
-      destination: '/app/tasks.create',
-      body: JSON.stringify(task),
+  create() {
+    this.taskService.ws.add({
+      title: this.faker.lorem.sentence(),
+      description: this.faker.lorem.paragraph(),
     });
   }
 

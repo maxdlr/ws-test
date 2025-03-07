@@ -11,6 +11,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class TaskDto {
+
+    private Long id;
+
     @Nonnull
     private String title;
     @Nonnull
@@ -35,6 +38,15 @@ public class TaskDto {
     @Nonnull
     public String getDescription() {
         return description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public TaskDto setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public TaskDto setTitle(@Nonnull String title) {

@@ -1,18 +1,14 @@
-<div class="container">
-  <header>
-    <h1>Task Management App</h1>
-  </header>
-
-  <div class="content">
-    <button (click)="onSendMessage()" class="btn btn-primary">
-      Send Test Message
+<div class="mt-10">
+  <div class="flex justify-center">
+    <button
+      (click)="create()"
+      class="cursor-pointer hover:bg-gray-700 hover:text-white py-3 px-5 bg-gray-600 text-white rounded-xl active:bg-gray-200 active:text-black"
+    >
+      Create random task
     </button>
-
-    <div class="main">
-      <app-task-list [tasks]="tasks"/>
-    </div>
   </div>
-</div>
 
-<div id="messages">
+  <div class="main">
+    <app-task-list [tasks]="tasks" />
+  </div>
 </div>
