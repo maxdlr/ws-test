@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { IMessage } from '@stomp/stompjs';
 import { RxStompService } from './web-socket.service';
 import { Model } from '../../model/model';
-import { inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 export interface WsModelEndPoints {
   watch: string;
@@ -20,8 +20,12 @@ export interface WsMethods<M extends Model> {
 
 export enum WsTopicNameEnum {
   TASKS = 'tasks',
+  TEAMS = 'teams',
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class WsService<M extends Model> {
   protected rxStompService = inject(RxStompService);
   protected model!: WsModelEndPoints;

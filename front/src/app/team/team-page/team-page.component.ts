@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Team } from '../../../model/team.model';
-import { TeamService } from '../../../services/team.service';
+import { TeamHttpService } from '../../../services/team-http.service';
 
 @Component({
   selector: 'app-team-page',
@@ -10,9 +10,11 @@ import { TeamService } from '../../../services/team.service';
 })
 export class TeamPageComponent implements OnInit {
   public team!: Team;
-  private teamService = inject(TeamService);
+  private teamService = inject(TeamHttpService);
 
   public ngOnInit(): void {
-    console.log('hello team');
+    this.teamService.getAll().subscribe((teams) => {
+      console.log(teams);
+    });
   }
 }

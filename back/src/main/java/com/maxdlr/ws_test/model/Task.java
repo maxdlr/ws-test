@@ -27,5 +27,4 @@ public class Task {
     private Date createdAt;
     @ManyToOne
     private Team team;
-
 }

@@ -2,7 +2,10 @@ import { Component, inject, Input, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Task } from '../../../../model/task.model';
 import { debounceTime, Subject } from 'rxjs';
-import { WsService } from '../../../../services/WebSockets/WsModelAbstractService';
+import {
+  WsService,
+  WsTopicNameEnum,
+} from '../../../../services/WebSockets/WsModelAbstractService';
 
 @Component({
   selector: 'app-task-read',
@@ -16,8 +19,7 @@ export class TaskReadComponent implements OnInit {
   protected currentField: string | null = null;
   private taskSubject = new Subject<void>();
   private debounceTime = 500;
-  // private taskService = inject(TaskHttpService);
-  private wsService = inject(WsService<Task>);
+  private wsService = new WsService<Task>(WsTopicNameEnum.TASKS);
   private renderer = inject(Renderer2);
 
   public delete() {

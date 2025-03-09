@@ -4,7 +4,10 @@ import { IMessage } from '@stomp/stompjs';
 import { Subscription } from 'rxjs';
 import { TaskHttpService } from '../../../../services/task-http.service';
 import { faker } from '@faker-js/faker';
-import { WsService } from '../../../../services/WebSockets/WsModelAbstractService';
+import {
+  WsService,
+  WsTopicNameEnum,
+} from '../../../../services/WebSockets/WsModelAbstractService';
 
 @Component({
   selector: 'app-task-list',
@@ -16,7 +19,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   private topicSubscription!: Subscription;
   private taskService = inject(TaskHttpService);
-  private wsService = inject(WsService<Task>);
+  private wsService = new WsService<Task>(WsTopicNameEnum.TASKS);
   private faker = faker;
 
   ngOnInit() {
