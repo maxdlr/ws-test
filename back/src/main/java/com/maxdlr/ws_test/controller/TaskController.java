@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/tasks")
 public class TaskController {
 
+    private final String wsEndPoint = "tasks";
     private final TaskService taskService;
     private final SimpMessagingTemplate messagingTemplate;
 
@@ -23,7 +24,7 @@ public class TaskController {
         this.messagingTemplate = messagingTemplate;
     }
 
-    @GetMapping("/tasks")
+    @GetMapping
     public ResponseEntity<List<TaskDto>> getAllTasks() {
         return ResponseEntity.ok(this.taskService.getAllTasks());
     }
@@ -31,18 +32,18 @@ public class TaskController {
     @MessageMapping("/tasks.add")
     public void createTaskWs(TaskDto taskDto) {
         this.taskService.addTask(taskDto);
-        messagingTemplate.convertAndSend("/topic/tasks", this.taskService.getAllTasks());
+        messagingTemplate.convertAndSend("/topic/" + this.wsEndPoint, this.taskService.getAllTasks());
     }
 
     @MessageMapping("/tasks.save")
     public void saveTaskWs(TaskDto taskDto) {
         this.taskService.updateTask(taskDto);
-        messagingTemplate.convertAndSend("/topic/tasks", this.taskService.getAllTasks());
+        messagingTemplate.convertAndSend("/topic/" + this.wsEndPoint, this.taskService.getAllTasks());
     }
 
     @MessageMapping("/tasks.delete")
     public void deleteTask(String id) {
         this.taskService.deleteTask(Long.valueOf(id));
-        messagingTemplate.convertAndSend("/topic/tasks", this.taskService.getAllTasks());
+        messagingTemplate.convertAndSend("/topic/" + this.wsEndPoint, this.taskService.getAllTasks());
     }
 }
