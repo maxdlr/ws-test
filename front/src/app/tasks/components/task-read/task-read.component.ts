@@ -1,8 +1,8 @@
 import { Component, inject, Input, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Task } from '../../../../model/task.model';
-import { TaskService } from '../../../../services/task.service';
 import { debounceTime, Subject } from 'rxjs';
+import { WsService } from '../../../../services/WebSockets/WsModelAbstractService';
 
 @Component({
   selector: 'app-task-read',
@@ -16,11 +16,12 @@ export class TaskReadComponent implements OnInit {
   protected currentField: string | null = null;
   private taskSubject = new Subject<void>();
   private debounceTime = 500;
-  private taskService = inject(TaskService);
+  // private taskService = inject(TaskHttpService);
+  private wsService = inject(WsService<Task>);
   private renderer = inject(Renderer2);
 
   public delete() {
-    this.taskService.ws.delete(this.task);
+    this.wsService.ws.delete(this.task);
   }
 
   public save(field: string) {
@@ -35,7 +36,7 @@ export class TaskReadComponent implements OnInit {
   public ngOnInit() {
     this.initForm();
     this.taskSubject.pipe(debounceTime(this.debounceTime)).subscribe(() => {
-      this.taskService.ws.save(this.task);
+      this.wsService.ws.save(this.task);
       this.renderer.selectRootElement('#' + this.currentField).focus();
       this.currentField = null;
     });

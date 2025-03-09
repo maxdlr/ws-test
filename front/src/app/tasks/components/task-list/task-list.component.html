@@ -1,8 +1,22 @@
-<div>
-  <section class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-5 m-12">
-    <div *ngFor="let task of tasks" class="border border-gray-400 rounded-2xl p-5">
-      <app-task-read [task]="task" />
+<div class="mt-10">
+  <div class="flex justify-center">
+    <button
+      (click)="create()"
+      class="cursor-pointer hover:bg-gray-700 hover:text-white py-3 px-5 bg-gray-600 text-white rounded-xl active:bg-gray-200 active:text-black"
+    >
+      Create random task
+    </button>
+  </div>
+
+  <div class="main">
+    <div>
+      <section class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-5 m-12">
+        <div *ngFor="let task of tasks" class="border border-gray-400 rounded-2xl p-5">
+          {{ task.id }}
+          <app-task-read [task]="task"></app-task-read>
+        </div>
+      </section>
+      <div *ngIf="tasks.length === 0" class="text-2xl text-center">No tasks available</div>
     </div>
-  </section>
-  <div *ngIf="tasks.length === 0" class="text-2xl text-center">No tasks available</div>
+  </div>
 </div>
